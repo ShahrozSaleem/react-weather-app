@@ -1,0 +1,20 @@
+.weather-report {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  padding: 20px 5px;
+  color: white;
+}
+
+.tooltip-card {
+  text-shadow: none;
+}
+
+.tooltip-card * {
+  text-shadow: none;
+  color: black;
+}
+
+.capitalized {
+  text-transform: capitalize;
+}
