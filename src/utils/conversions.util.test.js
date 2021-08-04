@@ -37,4 +37,7 @@ test('should test conversions', () => {
     expect(convert.toDateTime(1627757513000)).toBe("Sat 31 06:51 PM");
     // seconds => display date time
     expect(convert.fromSecToDateTime(1627757513)).toBe("Sat 31 06:51 PM");
+
+    // number list => average
+    expect((convert.getAverage([10, 2, 38, 23, 38, 23, 21])).toFixed(4)).toBe((22.142857142857).toFixed(4));
 });

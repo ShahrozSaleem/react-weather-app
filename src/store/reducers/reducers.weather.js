@@ -1,4 +1,4 @@
-import { COUNTRIES, DEFAULT_TEMP_UNIT, getParsedForecast } from "../../utils/helpers.util";
+import { COUNTRIES, DEFAULT_TEMP_UNIT, getAverageForecast, getParsedForecast } from "../../utils/helpers.util";
 import { actionTypes } from "../actions";
 
 export const loadingReducer = (state = true, action) => {
@@ -77,9 +77,9 @@ export const currentForecastReducer = (state = {}, action) => {
 export const dailyForecastReducer = (state = [], action) => {
     switch (action.type) {
         case actionTypes.SET_DAILY_FORECAST:
-            return action.payload.days.map(weatherInfo => {
-                return getParsedForecast(
-                    weatherInfo,
+            return action.payload.days.map(weatherInfoList => {
+                return getAverageForecast(
+                    weatherInfoList,
                     action.payload.tempUnit,
                     action.payload.sunrise,
                     action.payload.sunset

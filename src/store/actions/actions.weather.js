@@ -52,11 +52,11 @@ export const setDailyForecast = ({ originalRes, tempUnit }) => {
         type: actionTypes.SET_DAILY_FORECAST,
         payload: {
             days: [
-                originalRes.list[0],
-                originalRes.list[8],
-                originalRes.list[16],
-                originalRes.list[24],
-                originalRes.list[32]
+                originalRes.list.slice(0, 8),
+                originalRes.list.slice(8, 16),
+                originalRes.list.slice(16, 24),
+                originalRes.list.slice(24, 32),
+                originalRes.list.slice(32, 40)
             ],
             tempUnit,
             sunrise: originalRes.city.sunrise,

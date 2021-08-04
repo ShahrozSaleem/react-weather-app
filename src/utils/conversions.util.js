@@ -59,6 +59,12 @@ function fromSecToDateTime(sec) {
     return fromSecToDisplayDate(sec) + " " + fromSecToDisplayTime(sec);
 }
 
+function getAverage(numList) {
+    let avg = 0;
+    numList.forEach(num => avg += num);
+    return (avg / numList.length);
+}
+
 const convert = Object.seal({
     toCelcius,
     toFarenheit,
@@ -70,7 +76,8 @@ const convert = Object.seal({
     toDisplayTime,
     fromSecToDisplayTime,
     toDateTime,
-    fromSecToDateTime
+    fromSecToDateTime,
+    getAverage
 });
 
 export default convert;

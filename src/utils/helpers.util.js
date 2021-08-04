@@ -301,6 +301,24 @@ function getParsedForecast(weatherInfo, tempUnit, sunrise, sunset) {
     };
 }
 
+function getAverageForecast(weatherInfoList, tempUnit, sunrise, sunset) {
+    weatherInfoList = JSON.parse(JSON.stringify(weatherInfoList));
+    let temps = [];
+    let tempsMin = [];
+    let tempsMax = [];
+    weatherInfoList.forEach(weatherInfo => {
+        temps.push(weatherInfo.main.temp);
+        tempsMin.push(weatherInfo.main.temp_min);
+        tempsMax.push(weatherInfo.main.temp_max);
+    });
+
+    weatherInfoList[0].main.temp = convert.getAverage(temps);
+    weatherInfoList[0].main.temp_min = convert.getAverage(tempsMin);
+    weatherInfoList[0].main.temp_max = convert.getAverage(tempsMax);
+
+    return getParsedForecast(weatherInfoList[0], tempUnit, sunrise, sunset);
+}
+
 function isUnderLimit(previousTime_ms, currentTime_ms, limit_ms) {
     if (previousTime_ms && currentTime_ms && limit_ms)
         return (currentTime_ms - previousTime_ms) < limit_ms;
@@ -318,5 +336,6 @@ export {
 
     getMode,
     getParsedForecast,
-    isUnderLimit
+    isUnderLimit,
+    getAverageForecast
 };
