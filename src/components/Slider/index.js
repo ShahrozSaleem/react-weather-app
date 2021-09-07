@@ -22,6 +22,13 @@ export default function Slider() {
     const sm = useMediaQuery('(max-width:400px)'); // true
     const md = useMediaQuery('(max-width:700px)'); // true
 
+    const [selectedItem, setSelectedItem] = useState("");
+
+    useEffect(() => {
+        if (dailyForecast.length)
+            setSelectedItem(dailyForecast[0].date);
+    }, [dailyForecast])
+
     useEffect(() => {
         if (sm) {
             console.log("sm");
@@ -153,7 +160,7 @@ export default function Slider() {
                                 displayItems.map(
                                     (forecast, index) =>
                                         <div key={index} className="slide">
-                                            <WeatherCard forecast={forecast} />
+                                            <WeatherCard forecast={forecast} setSelectedItem={setSelectedItem} selectedItem={selectedItem} />
                                         </div>
                                 )
                             )

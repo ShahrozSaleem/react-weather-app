@@ -65,3 +65,7 @@
   margin: 5px;
   margin-bottom: 8px;
 }
+
+.active-item {
+  background: red;
+}

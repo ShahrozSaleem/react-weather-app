@@ -6,19 +6,22 @@ import { getMode } from '../../utils/helpers.util';
 import { useDispatch } from 'react-redux';
 import { setSelectedDay } from '../../store/actions/actions.weather';
 
-export default function WeatherCard({ forecast }) {
+export default function WeatherCard({ forecast, selectedItem, setSelectedItem }) {
 
     const dispatch = useDispatch();
+
+
 
     function updateHourlyForecast() {
         if (forecast && typeof forecast === "object" && Object.keys(forecast).length && forecast.current_time_s) {
             dispatch(setSelectedDay(forecast.current_time_s));
         }
+        setSelectedItem(forecast.date);
     }
 
     return (
         <>
-            <div className="weather-card" onClick={updateHourlyForecast} data-testid="weather-card-test">
+            <div className="weather-card" className={selectedItem == forecast.date ? 'active-item' : ''} onClick={updateHourlyForecast} data-testid="weather-card-test">
                 {
                     (forecast != null && typeof forecast === "object" && Object.keys(forecast).length > 0) &&
                     <>
