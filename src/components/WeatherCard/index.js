@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./WeatherCard.css";
 import { getWeatherIcon } from "../../utils/weatherConditions.util";
 import { getMode } from '../../utils/helpers.util';
@@ -11,6 +11,11 @@ export default function WeatherCard({ forecast, selectedItem, setSelectedItem })
     const dispatch = useDispatch();
 
 
+    useEffect(() => {
+        if (selectedItem == forecast.date && forecast && typeof forecast === "object" && Object.keys(forecast).length && forecast.current_time_s) {
+            dispatch(setSelectedDay(forecast.current_time_s));
+        }
+    }, [selectedItem])
 
     function updateHourlyForecast() {
         if (forecast && typeof forecast === "object" && Object.keys(forecast).length && forecast.current_time_s) {

@@ -25,9 +25,9 @@ export default function Slider() {
     const [selectedItem, setSelectedItem] = useState("");
 
     useEffect(() => {
-        if (dailyForecast.length)
-            setSelectedItem(dailyForecast[0].date);
-    }, [dailyForecast])
+        if (displayItems.length)
+            setSelectedItem(displayItems[0].date);
+    }, [displayItems])
 
     useEffect(() => {
         if (sm) {
