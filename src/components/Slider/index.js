@@ -25,9 +25,32 @@ export default function Slider() {
     const [selectedItem, setSelectedItem] = useState("");
 
     useEffect(() => {
-        if (displayItems.length)
-            setSelectedItem(displayItems[0].date);
-    }, [displayItems])
+
+        if (displayItems.length) {
+            const savedSelectedItem = localStorage.getItem("selectedItem");
+            if (savedSelectedItem) {
+                const item = displayItems.filter(obj => obj.date == savedSelectedItem);
+                if (item && item.length) {
+                    setSelectedItem(savedSelectedItem);
+                }
+                else {
+                    setSelectedItem(displayItems[0].date);
+                }
+            }
+            else {
+                setSelectedItem(displayItems[0].date);
+            }
+
+        }
+
+
+
+    }, [displayItems]);
+
+    useEffect(() => {
+        localStorage.setItem("selectedItem", selectedItem);
+        localStorage.setItem("page", page);
+    }, [selectedItem])
 
     useEffect(() => {
         if (sm) {
@@ -47,7 +70,6 @@ export default function Slider() {
 
     useEffect(() => {
         let max = Math.ceil(dailyForecast.length / pageSize);
-        console.log("max :: ", max);
         setMaxPage(max);
         if (max <= 1) {
             setRightDisabled(true);
@@ -56,6 +78,12 @@ export default function Slider() {
             setRightDisabled(false);
 
         setItems();
+
+        const savedPage = localStorage.getItem("page");
+        if (savedPage && savedPage <= max) {
+            setPage(savedPage);
+        }
+
     }, [dailyForecast, pageSize]);
 
     useEffect(() => {
@@ -74,6 +102,7 @@ export default function Slider() {
         }
 
         setItems();
+
     }, [page])
 
     function setItems() {
