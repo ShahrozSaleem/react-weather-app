@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { weatherApi } from "./apis";
 import Home from './pages/Home';
 import './App.css';
@@ -35,6 +35,8 @@ function App() {
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
   const refresh = useSelector(state => state.refresh);
+
+  const [errorMessage, setErrorMessage] = useState("Something went wrong");
 
   useEffect(() => {
     let tempUnit = window.localStorage.getItem("TEMP_UNIT");
@@ -93,6 +95,12 @@ function App() {
           })
           .catch(error => {
             console.error(error);
+            if (error.response && error.response.data && error.response.data.message) {
+              setErrorMessage(error.response.data.message);
+            }
+            else {
+              setErrorMessage(error.message || "Something went wrong");
+            }
             dispatch(setError(true));
             dispatch(setLoading(false));
           });
@@ -131,7 +139,7 @@ function App() {
   return (
     <div className="app" data-testid="app-test">
       {
-        loading ? <SplashScreen /> : (error ? <Error /> : <Home />)
+        loading ? <SplashScreen /> : (error ? <Error msg={errorMessage} /> : <Home />)
       }
     </div>
   );
